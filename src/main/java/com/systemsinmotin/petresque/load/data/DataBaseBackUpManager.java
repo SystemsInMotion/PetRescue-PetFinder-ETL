@@ -1,4 +1,4 @@
-package com.systemsinmotin.petresque.translate.data;
+package com.systemsinmotin.petresque.load.data;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,7 +70,6 @@ public class DataBaseBackUpManager {
 		for (PetfinderPetRecord petFinderRecord : petFinderPets) {
 			RemoteIdentifier remoteIdentifer = remoteIdentifierManager.findByRemoteId(petFinderRecord.getId().toString(
 					10));
-
 			if (remoteIdentifer != null
 					&& isPetRecordOutdated(petFinderRecord.getLastUpdate(), remoteIdentifer.getLastUpdated())) {
 				petManger.storePetRecord(copyToPetRecord(new PetRecord(), petFinderRecord));

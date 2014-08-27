@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import com.systemsinmotin.petresque.translate.data.DataBaseBackUpManager;
+import com.systemsinmotin.petresque.load.data.DataBaseBackUpManager;
 
 public class Scheduler {
 
@@ -18,9 +18,7 @@ public class Scheduler {
 
 	@Scheduled(cron = "#{dataBaseBackUpUtil.getCronProperty()}")
 	public void performDataBaseBackUp() {
-
 		dataBaseBackUpManager.updateDataBase();
-
 	}
 
 }

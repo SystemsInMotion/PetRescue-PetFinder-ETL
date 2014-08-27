@@ -1,4 +1,4 @@
-package com.systemsinmotion.petrescue.data.migration;
+package com.systemsinmotion.petrescue.data.reader;
 
 import java.util.List;
 
@@ -20,21 +20,31 @@ public class PetFinderReader implements ItemReader<PetfinderPetRecord> {
 
 	@Autowired
 	@Qualifier("petFinderService")
-	PetFinderConsumer petFinderService;
+	private PetFinderConsumer petFinderService;
 
 	private List<PetfinderPetRecord> petRecords;
 
 	private int index;
 
+	private int totalRecords;
+
 	@PostConstruct
 	public void init() {
+
 		petRecords = this.petFinderService.shelterPets(null, null, null, null, null);
+		totalRecords = petRecords.size();
 	}
 
 	public PetfinderPetRecord read() throws Exception, UnexpectedInputException, ParseException,
 			NonTransientResourceException {
-		// TODO Auto-generated method stub
-		return null;
+		PetfinderPetRecord record = null;
+		if (petRecords == null && !petRecords.isEmpty() && index < petRecords.size()) {
+			record = petRecords.get(index++);
+		}
+		return record;
 	}
 
+	public boolean hasMoreRecords() {
+		return index > totalRecords;
+	}
 }
