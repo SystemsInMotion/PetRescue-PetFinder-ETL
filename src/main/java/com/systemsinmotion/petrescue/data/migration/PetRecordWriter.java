@@ -12,10 +12,9 @@ import com.systemsinmotion.petrescue.entity.PetRecord;
 public class PetRecordWriter implements ItemWriter<PetRecord> {
 	private static final Logger logger = Logger.getLogger(PetRecordWriter.class);
 
-	@Override
-	public void write(List<? extends PetRecord> items) throws Exception {
+	public void write(List<? extends PetRecord> arg0) throws Exception {
 		// TODO Auto-generated method stub
-		logger.debug("items.size():" + items.size());
+
 	}
 
 }

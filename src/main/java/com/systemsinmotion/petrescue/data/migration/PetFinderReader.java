@@ -31,14 +31,10 @@ public class PetFinderReader implements ItemReader<PetfinderPetRecord> {
 		petRecords = this.petFinderService.shelterPets(null, null, null, null, null);
 	}
 
-	@Override
 	public PetfinderPetRecord read() throws Exception, UnexpectedInputException, ParseException,
 			NonTransientResourceException {
-		PetfinderPetRecord record = null;
-		if (petRecords == null && !petRecords.isEmpty() && index < petRecords.size()) {
-			record = petRecords.get(index++);
-		}
-		return record;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
