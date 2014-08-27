@@ -1,4 +1,4 @@
-package com.systemsinmotin.translate.data;
+package com.systemsinmotin.petresque.translate.data;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import com.systemsinmotion.petrescue.datamanager.PetManager;
+import com.systemsinmotion.petrescue.datamanager.RemoteIdentifierManager;
 import com.systemsinmotion.petrescue.entity.AnimalType;
 import com.systemsinmotion.petrescue.entity.Breed;
 import com.systemsinmotion.petrescue.entity.Location;
@@ -27,8 +29,6 @@ import com.systemsinmotion.petrescue.entity.type.AgeType;
 import com.systemsinmotion.petrescue.entity.type.GenderType;
 import com.systemsinmotion.petrescue.entity.type.SizeType;
 import com.systemsinmotion.petrescue.entity.type.StatusType;
-import com.systemsinmotion.petrescue.service.PetService;
-import com.systemsinmotion.petrescue.service.RemoteIdentifierService;
 import com.systemsinmotion.petrescue.web.PetFinderConsumer;
 
 @Service("dataBaseBackUpManager")
@@ -37,7 +37,7 @@ public class DataBaseBackUpManager {
 	private static final String DEFAULT_CRON_INTERVAL = "00 00 * * *";
 
 	@Autowired
-	PetService petService;
+	PetManager petManger;
 
 	@Autowired
 	Environment environment;
@@ -46,7 +46,7 @@ public class DataBaseBackUpManager {
 	PetFinderConsumer petFinderService;
 
 	@Autowired
-	RemoteIdentifierService remoteIdentifierService;
+	RemoteIdentifierManager remoteIdentifierManager;
 
 	public String getCronProperty() {
 
@@ -55,11 +55,11 @@ public class DataBaseBackUpManager {
 
 	public boolean updateDataBase() {
 
-		List<PetRecord> petRecordPets = petService.findAllPetRecords();
+		List<PetRecord> petRecordPets = petManger.findAllPetRecords();
 		List<PetfinderPetRecord> petFinderPets = petFinderService.shelterPets(null, null, null, null, null);
 
 		if (petRecordPets == null) {
-			petService.storeAllPets(convertToPetRecords(petFinderPets));
+			petManger.storeAllPets(convertToPetRecords(petFinderPets));
 		} else {
 			copyPetFinderRecordsToPetRecord(petFinderPets);
 		}
@@ -68,12 +68,12 @@ public class DataBaseBackUpManager {
 
 	private void copyPetFinderRecordsToPetRecord(List<PetfinderPetRecord> petFinderPets) {
 		for (PetfinderPetRecord petFinderRecord : petFinderPets) {
-			RemoteIdentifier remoteIdentifer = remoteIdentifierService.findByRemoteId(petFinderRecord.getId().toString(
+			RemoteIdentifier remoteIdentifer = remoteIdentifierManager.findByRemoteId(petFinderRecord.getId().toString(
 					10));
 
 			if (remoteIdentifer != null
 					&& isPetRecordOutdated(petFinderRecord.getLastUpdate(), remoteIdentifer.getLastUpdated())) {
-				petService.storePetRecord(copyToPetRecord(new PetRecord(), petFinderRecord));
+				petManger.storePetRecord(copyToPetRecord(new PetRecord(), petFinderRecord));
 			}
 		}
 	}
@@ -193,7 +193,7 @@ public class DataBaseBackUpManager {
 
 			petRecordPhoto.setSize(photo.getSize());
 			petRecordPhoto.setUrl(photo.getValue());
-			petRecordPhoto.setPet(pet);
+			petRecordPhoto.setPet(pet.getId());
 			photos.add(petRecordPhoto);
 			// photoservice.save(photo);
 			petRecordPhoto = new Photo();
