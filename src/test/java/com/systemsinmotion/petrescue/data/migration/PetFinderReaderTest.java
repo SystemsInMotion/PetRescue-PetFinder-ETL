@@ -8,6 +8,8 @@ import org.petfinder.entity.PetfinderPetRecord;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.systemsinmotion.petrescue.data.reader.PetFinderReader;
+
 @ContextConfiguration(locations = { "/test-context.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 public class PetFinderReaderTest {

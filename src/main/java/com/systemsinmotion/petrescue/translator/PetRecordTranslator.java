@@ -12,20 +12,29 @@ import com.systemsinmotion.petrescue.entity.Breed;
 import com.systemsinmotion.petrescue.entity.PetRecord;
 
 @Service("petRecordTranslator")
-public class PetRecordTranslator {
+public class PetRecordTranslator implements Translator<PetRecord, PetfinderPetRecord> {
 
 	@Autowired
 	private PetFinderReader petFinderReader;
 
 	@Autowired
+	private LocationTranslator locationTranslator;
+
+	@Autowired
 	private List<PetRecord> petRecords;
+
+	public PetRecord translate(PetfinderPetRecord type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	public List<PetRecord> translatePetRecords() {
 
 		while (petFinderReader.hasMoreRecords()) {
-
 			try {
+
 				copyFromPetFindToPetRecord(petFinderReader.read());
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -35,13 +44,14 @@ public class PetRecordTranslator {
 		return null;
 	}
 
-	private final PetRecord copyFromPetFindToPetRecord(final PetfinderPetRecord petfinderPetRecord) {
+	private final PetRecord copyFromPetFindToPetRecord(final PetfinderPetRecord petFinderPetRecord) {
 
 		PetRecord petRecord = new PetRecord();
 
-		petRecord.setName(petfinderPetRecord.getName());
-		petRecord.setDescription(petfinderPetRecord.getDescription());
-		petRecord.setBreeds(copyPetFinderPetBreedsToPetRecord(petfinderPetRecord));
+		petRecord.setName(petFinderPetRecord.getName());
+		petRecord.setDescription(petFinderPetRecord.getDescription());
+		petRecord.setBreeds(copyPetFinderPetBreedsToPetRecord(petFinderPetRecord));
+		petRecord.setLocation(locationTranslator.translate(petFinderPetRecord));
 
 		return petRecord;
 	}

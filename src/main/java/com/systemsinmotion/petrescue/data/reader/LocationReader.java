@@ -12,9 +12,9 @@ public class LocationReader {
 	@Autowired
 	private LocationManager locationManager;
 
-	public Location readLocation(int id) {
+	public Location readLocation(String address) {
 
-		Location locatin = locationManager.findLocationByID(id);
+		Location locatin = locationManager.findByAddress(address);
 
 		if (locatin == null) {
 			locatin = new Location();

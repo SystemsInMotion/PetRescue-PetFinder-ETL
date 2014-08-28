@@ -1,6 +1,7 @@
 package com.systemsinmotion.petrescue.translator;
 
 import org.petfinder.entity.PetContactType;
+import org.petfinder.entity.PetfinderPetRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,28 +9,19 @@ import com.systemsinmotion.petrescue.data.reader.LocationReader;
 import com.systemsinmotion.petrescue.entity.Location;
 
 @Service("locationTranslator")
-public class LocationTranslator implements Translator<Location, PetContactType> {
+public class LocationTranslator implements Translator<Location, PetfinderPetRecord> {
 
 	@Autowired
 	LocationReader locationReader;
 
-	public Location translate(PetContactType contactType) {
+	public Location translate(PetfinderPetRecord petFinderPetRecord) {
 
-		Location location = new Location();
-		copyPetContactTypeToLocation(contactType, location);
-
-		return location;
-	}
-
-	public Location updateLocaleObject(Location locale, PetContactType contactType) {
-
-		Location location = locationReader.readLocation(locale.getId());
-
+		Location location = locationReader.readLocation(petFinderPetRecord.getContact().getAddress1());
 		if (location == null) {
 			location = new Location();
 		}
 
-		return copyPetContactTypeToLocation(contactType, location);
+		return copyPetContactTypeToLocation(petFinderPetRecord.getContact(), location);
 	}
 
 	private Location copyPetContactTypeToLocation(PetContactType contactType, Location location) {

@@ -26,25 +26,25 @@ public class PetFinderReader implements ItemReader<PetfinderPetRecord> {
 
 	private int index;
 
-	private int totalRecords;
+	private int totalPetRecords;
 
 	@PostConstruct
 	public void init() {
 
 		petRecords = this.petFinderService.shelterPets(null, null, null, null, null);
-		totalRecords = petRecords.size();
+		totalPetRecords = petRecords.size();
 	}
 
 	public PetfinderPetRecord read() throws Exception, UnexpectedInputException, ParseException,
 			NonTransientResourceException {
 		PetfinderPetRecord record = null;
-		if (petRecords == null && !petRecords.isEmpty() && index < petRecords.size()) {
+		if (petRecords != null && !petRecords.isEmpty() && index < totalPetRecords) {
 			record = petRecords.get(index++);
 		}
 		return record;
 	}
 
 	public boolean hasMoreRecords() {
-		return index > totalRecords;
+		return index > totalPetRecords;
 	}
 }
