@@ -14,28 +14,32 @@ public class LocationTranslator implements Translator<Location, PetfinderPetReco
 	@Autowired
 	LocationReader locationReader;
 
-	public Location translate(PetfinderPetRecord petFinderPetRecord) {
+	public Location translate(final PetfinderPetRecord petFinderPetRecord) {
 
-		Location location = locationReader.readLocation(petFinderPetRecord.getContact().getAddress1());
-		if (location == null) {
-			location = new Location();
+		PetContactType contactType = petFinderPetRecord.getContact();
+
+		Location location = locationReader.readLocation(contactType.getAddress1());
+
+		if (!isEqual(location, contactType)) {
+
+			location.setAddress1(contactType.getAddress1());
+			location.setAddress2(contactType.getAddress2());
+			location.setZipCode(contactType.getZip());
+			location.setContactName(contactType.getName());
+			location.setEmail(contactType.getEmail());
+			location.setFax(contactType.getFax());
+			location.setPhone(contactType.getPhone());
+			location.setStateOrProvince(contactType.getState());
+
 		}
-
-		return copyPetContactTypeToLocation(petFinderPetRecord.getContact(), location);
+		return location;
 	}
 
-	private Location copyPetContactTypeToLocation(PetContactType contactType, Location location) {
-
-		location.setAddress1(contactType.getAddress1());
-		location.setAddress2(contactType.getAddress2());
-		location.setZipCode(contactType.getZip());
-		location.setContactName(contactType.getName());
-		location.setEmail(contactType.getEmail());
-		location.setFax(contactType.getFax());
-		location.setPhone(contactType.getPhone());
-		location.setStateOrProvince(contactType.getState());
-
-		return location;
+	private boolean isEqual(Location location, PetContactType contactType) {
+		return (location.getAddress1().equals(contactType.getAddress1())
+				&& location.getAddress2().equals(contactType.getAddress2())
+				&& location.getEmail().equals(contactType.getEmail()) && location.getFax().equals(contactType.getFax()) && location
+				.getPhone().equals(contactType.getPhone()));
 	}
 
 }

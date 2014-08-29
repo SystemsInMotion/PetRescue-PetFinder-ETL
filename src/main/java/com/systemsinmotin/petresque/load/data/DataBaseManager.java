@@ -32,7 +32,7 @@ import com.systemsinmotion.petrescue.entity.type.StatusType;
 import com.systemsinmotion.petrescue.web.PetFinderConsumer;
 
 @Service("dataBaseBackUpManager")
-public class DataBaseBackUpManager {
+public class DataBaseManager {
 
 	private static final String DEFAULT_CRON_INTERVAL = "00 00 * * *";
 

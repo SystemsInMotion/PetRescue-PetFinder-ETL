@@ -32,7 +32,7 @@ public class PetFinderReader implements ItemReader<PetfinderPetRecord> {
 	public void init() {
 
 		petRecords = this.petFinderService.shelterPets(null, null, null, null, null);
-		totalPetRecords = petRecords.size();
+		totalPetRecords = (petRecords == null) ? 0 : petRecords.size();
 	}
 
 	public PetfinderPetRecord read() throws Exception, UnexpectedInputException, ParseException,

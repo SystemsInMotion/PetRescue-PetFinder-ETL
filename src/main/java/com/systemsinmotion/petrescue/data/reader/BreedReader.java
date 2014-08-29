@@ -1,15 +1,33 @@
 package com.systemsinmotion.petrescue.data.reader;
 
+import java.util.List;
+
 import org.petfinder.entity.PetfinderPetRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.systemsinmotion.petrescue.datamanager.BreedManager;
 import com.systemsinmotion.petrescue.entity.Breed;
-import com.systemsinmotion.petrescue.translator.Translator;
 
-public class BreedReader implements Translator<Breed, PetfinderPetRecord> {
+public class BreedReader {
 
-	public Breed translate(PetfinderPetRecord type) {
-		// TODO Auto-generated method stub
-		return null;
+	@Autowired
+	private BreedManager breedManager;
+
+	public Breed read(String typeOfBreed) {
+
+		Breed breed = breedManager.findBreedByName(typeOfBreed);
+
+		if (breed == null) {
+			breed = new Breed();
+		}
+
+		return breed;
 	}
 
+	public List<Breed> read(PetfinderPetRecord animalTypeName) {
+
+		List<Breed> breeds = breedManager.findAllBreedsByAnimalTypeName(animalTypeName.getBreeds().getAnimal());
+
+		return breeds;
+	}
 }

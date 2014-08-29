@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import com.systemsinmotin.petresque.load.data.DataBaseBackUpManager;
+import com.systemsinmotin.petresque.load.data.DataBaseManager;
 
 public class Scheduler {
 
 	@Autowired
-	DataBaseBackUpManager dataBaseBackUpManager;
+	DataBaseManager dataBaseBackUpManager;
 
 	@Bean
 	public Scheduler getSchedule() {
