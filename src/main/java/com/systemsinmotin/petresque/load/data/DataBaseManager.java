@@ -15,7 +15,7 @@ import org.petfinder.entity.PetfinderPetRecord;
 import org.petfinder.entity.PetfinderPetRecord.Options;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.systemsinmotion.petrescue.datamanager.PetManager;
 import com.systemsinmotion.petrescue.datamanager.RemoteIdentifierManager;
@@ -31,7 +31,7 @@ import com.systemsinmotion.petrescue.entity.type.SizeType;
 import com.systemsinmotion.petrescue.entity.type.StatusType;
 import com.systemsinmotion.petrescue.web.PetFinderConsumer;
 
-@Service("dataBaseBackUpManager")
+@Component("dataBaseBackUpManager")
 public class DataBaseManager {
 
 	private static final String DEFAULT_CRON_INTERVAL = "00 00 * * *";
