@@ -6,14 +6,14 @@ import org.petfinder.entity.PetOptionType;
 import org.petfinder.entity.PetfinderPetRecord;
 import org.petfinder.entity.PetfinderPetRecord.Options;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.systemsinmotion.petrescue.data.reader.PetFinderReader;
 import com.systemsinmotion.petrescue.data.writer.PetRecordWriter;
 import com.systemsinmotion.petrescue.datamanager.RemoteIdentifierManager;
 import com.systemsinmotion.petrescue.entity.PetRecord;
 
-@Service("petRecordTranslator")
+@Component("petRecordTranslator")
 public class PetRecordTranslator implements Translator<PetRecord, PetfinderPetRecord> {
 
 	@Autowired

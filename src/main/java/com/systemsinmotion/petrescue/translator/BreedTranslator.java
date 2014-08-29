@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.systemsinmotion.petrescue.entity.Breed;
 
-@Component
+@Component("breedTranslator")
 public class BreedTranslator implements Translator<Set<Breed>, PetfinderPetRecord> {
 
 	public Set<Breed> translate(final PetfinderPetRecord petFinderPetRecord) {

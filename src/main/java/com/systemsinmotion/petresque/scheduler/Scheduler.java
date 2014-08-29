@@ -26,7 +26,6 @@ public class Scheduler {
 
 	@Scheduled(cron = "#{dataBaseBackUpUtil.getCronProperty()}")
 	public void performDataBaseBackUp() {
-
 		try {
 
 			remoteIdentifierWriter.write(remoteIdentifierTranslator.translatePetRecords());
@@ -38,5 +37,4 @@ public class Scheduler {
 					"Fail to write records at " + dateFormat.format(date) + " caused by " + e.getCause());
 		}
 	}
-
 }

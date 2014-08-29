@@ -3,12 +3,12 @@ package com.systemsinmotion.petrescue.translator;
 import org.petfinder.entity.PetContactType;
 import org.petfinder.entity.PetfinderPetRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.systemsinmotion.petrescue.data.reader.LocationReader;
 import com.systemsinmotion.petrescue.entity.Location;
 
-@Service("locationTranslator")
+@Component("locationTranslator")
 public class LocationTranslator implements Translator<Location, PetfinderPetRecord> {
 
 	@Autowired

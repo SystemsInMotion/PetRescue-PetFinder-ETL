@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.petfinder.entity.PetfinderPetRecord;
+import org.springframework.stereotype.Component;
 
 import com.systemsinmotion.petrescue.entity.AnimalType;
 
+@Component("animalTypeTranslator")
 public class AnimalTypeTranslator implements Translator<AnimalType, PetfinderPetRecord> {
 
 	public AnimalType translate(PetfinderPetRecord petfinderPetRecord) {

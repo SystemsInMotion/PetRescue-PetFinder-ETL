@@ -11,11 +11,11 @@ import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.systemsinmotion.petrescue.web.PetFinderConsumer;
 
-@Component("petFinderReader")
+@Service("petFinderReader")
 public class PetFinderReader implements ItemReader<PetfinderPetRecord> {
 
 	@Autowired

@@ -9,6 +9,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.petfinder.entity.PetfinderPetRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.systemsinmotion.petrescue.data.reader.PetFinderReader;
 import com.systemsinmotion.petrescue.datamanager.RemoteIdentifierManager;
@@ -16,6 +17,7 @@ import com.systemsinmotion.petrescue.entity.RemoteIdentifier;
 import com.systemsinmotion.petrescue.entity.type.ApiType;
 import com.systemsinmotion.petrescue.mail.MailManager;
 
+@Component("remoteIdentifierTranslator")
 public class RemoteIdentifierTranslator {
 
 	@Autowired
