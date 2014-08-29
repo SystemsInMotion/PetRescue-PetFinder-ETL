@@ -1,5 +1,7 @@
 package com.systemsinmotion.petrescue.translator;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import com.systemsinmotion.petrescue.data.reader.PetFinderReader;
 import com.systemsinmotion.petrescue.datamanager.RemoteIdentifierManager;
 import com.systemsinmotion.petrescue.entity.RemoteIdentifier;
 import com.systemsinmotion.petrescue.entity.type.ApiType;
+import com.systemsinmotion.petrescue.mail.MailManager;
 
 public class RemoteIdentifierTranslator {
 
@@ -23,6 +26,9 @@ public class RemoteIdentifierTranslator {
 
 	@Autowired
 	private RemoteIdentifierManager remoteIdentifierManager;
+
+	@Autowired
+	private MailManager mailManager;
 
 	@Autowired
 	private List<RemoteIdentifier> petRecords;
@@ -38,24 +44,27 @@ public class RemoteIdentifierTranslator {
 						.toString());
 
 				if (remoteIdentifer == null) {
-					remoteIdentifer = createNewRemoteIdentifierRecord(new RemoteIdentifier(), petFinderRecord);
+					remoteIdentifer = copyPropertiesToRemoteIdentifierRecord(new RemoteIdentifier(), petFinderRecord);
 					petRecords.add(remoteIdentifer);
 
 				} else if (isPetRecordOutdated(petFinderRecord.getLastUpdate(), remoteIdentifer.getLastUpdated())) {
-					remoteIdentifer = createNewRemoteIdentifierRecord(remoteIdentifer, petFinderRecord);
+					remoteIdentifer = copyPropertiesToRemoteIdentifierRecord(remoteIdentifer, petFinderRecord);
 					petRecords.add(remoteIdentifer);
 				}
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				Date date = new Date();
+
+				mailManager.send_error(e,
+						"Fail to proform back up at " + dateFormat.format(date) + " caused by " + e.getCause());
 			}
 		}
 
 		return petRecords;
 	}
 
-	private RemoteIdentifier createNewRemoteIdentifierRecord(RemoteIdentifier remoteIdentifer,
+	private RemoteIdentifier copyPropertiesToRemoteIdentifierRecord(RemoteIdentifier remoteIdentifer,
 			PetfinderPetRecord petFinderRecord) {
 		remoteIdentifer.setApi(ApiType.PF);
 		remoteIdentifer.setLastUpdated(petFinderRecord.getLastUpdate().toGregorianCalendar().getTime());
